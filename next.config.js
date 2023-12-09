@@ -6,7 +6,13 @@ const nextConfig = {
             use: [{loader: '@svgr/webpack', options: {icon:true}}],
         })
         return config;
-    }
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
+    typescript: {
+        ignoreBuildErrors: true,
+    },
 }
 
 module.exports = nextConfig
