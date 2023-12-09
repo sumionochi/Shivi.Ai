@@ -10,7 +10,7 @@ const lexend = Lexend({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Shivi.Ai',
-  description: 'When Caring for health becomes accessible',
+  description: 'Track your Health, Help Doctors Find A Cure.',
 }
 
 export default function RootLayout({

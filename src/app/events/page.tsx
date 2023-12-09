@@ -1,12 +1,16 @@
-"use client"
+import { Metadata } from "next";
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: 'Shivi.Ai - Events'
+}
 
 type Props = {}
 
-const page = (props: Props) => {
+const EventsPage = (props: Props) => {
   return (
-    <div>page</div>
+    <div>EventsPage</div>
   )
 }
 
-export default page
+export default EventsPage
