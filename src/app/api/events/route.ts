@@ -12,18 +12,19 @@ export async function POST(req:Request) {
             console.error(result.error);
             return Response.json({error: "Invalid input"}, {status: 400})
         }
-        const {title, description, datetime, duration, painLevel} = result.data;
+        const {title, description, dateit, timeit, duration, painLevel} = result.data;
         const {userId} = auth();
         if(!userId) return Response.json({error:"Unauthorized"}, {status: 401});
         
-        const embedding = await getEmbeddingForNote(title, description);
+        const embedding = await getEmbeddingForNote(title, description, dateit, timeit, duration, painLevel);
         
         const event = await prisma.$transaction(async (tx) => {
         const note = await tx.event.create({
           data: {
             title,
             duration,
-            datetime,
+            dateit,
+            timeit,
             painLevel,
             description,
             userId,
@@ -58,7 +59,7 @@ export async function PUT(req: Request) {
         return Response.json({ error: "Invalid input" }, { status: 400 });
       }
   
-      const { id, title, description } = parseResult.data;
+      const { id, title, description, dateit, timeit, duration, painLevel } = parseResult.data;
   
       const note = await prisma.event.findUnique({ where: { id } });
   
@@ -72,14 +73,19 @@ export async function PUT(req: Request) {
         return Response.json({ error: "Unauthorized" }, { status: 401 });
       }
   
-      const embedding = await getEmbeddingForNote(title, description);
+      const embedding = await getEmbeddingForNote(title, description, dateit,timeit ,duration, painLevel);
   
       const updatedNote = await prisma.$transaction(async (tx) => {
         const updatedNote = await tx.event.update({
           where: { id },
           data: {
             title,
+            duration,
+            dateit,
+            timeit,
+            painLevel,
             description,
+            userId,
           },
         });
   
@@ -138,6 +144,6 @@ export async function PUT(req: Request) {
     }
   }
   
-  async function getEmbeddingForNote(title: string, content: string | undefined) {
-    return getEmbedding(title + "\n\n" + content ?? "");
+  async function getEmbeddingForNote(title: string, description: string | undefined, dateit: string,timeit: string, duration: string, painLevel: string) {
+    return getEmbedding(title + "\n\n" + description ?? "" + dateit + "\n\n" + timeit + "\n\n" + duration + "\n\n" + painLevel);
   }

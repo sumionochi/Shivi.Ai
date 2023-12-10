@@ -12,6 +12,11 @@ import { Button } from './ui/button'
 import { CalendarIcon, Loader2 } from 'lucide-react'
 import { Event } from '@prisma/client'
 import LoadingButton from './ui/loading-btn'
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+import { cn } from '@/lib/utils'
+import { Calendar } from './ui/calendar'
+import { format } from "date-fns"
+import { Slider } from './ui/slider'
 
 type Props = {
     open: boolean,
@@ -27,6 +32,10 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
         resolver: zodResolver(createEventSchema),
         defaultValues: {
             title: toEdit?.title || "",
+            dateit: toEdit?.dateit || "",
+            timeit: toEdit?.timeit || "",
+            duration: toEdit?.duration || "",
+            painLevel: toEdit?.painLevel || "",
             description: toEdit?.description || "",
         },
     });   
@@ -89,79 +98,42 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                                 <FormMessage/>
                             </FormItem>
                         )}/>
-                        {/* <FormField control={form.control} name='datetime' render={({field})=>(
+                        <FormField control={form.control} name='dateit' render={({field})=>(
                             <FormItem className='flex flex-col gap-0'>
-                                <FormLabel>Pick A Date</FormLabel>
+                                <FormLabel>Date of Crisis</FormLabel>
                                 <FormControl>
-                                <Popover>
-                                    <PopoverTrigger asChild>
-                                    <FormControl>
-                                        <Button
-                                        variant={"outline"}
-                                        className={cn(
-                                            "w-[240px] pl-3 text-left font-normal",
-                                            !field.value && "text-muted-foreground"
-                                        )}
-                                        >
-                                        {field.value ? (
-                                            format(field.value, "PPP")
-                                        ) : (
-                                            <span>Pick a date</span>
-                                        )}
-                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                        </Button>
-                                    </FormControl>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-auto p-0" align="start">
-                                    <Calendar
-                                        mode="single"
-                                        selected={field.value}
-                                        onSelect={(selectedDate) => {
-                                            if (selectedDate) {
-                                                field.onChange((selectedDate));
-                                            }
-                                        }}
-                                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                                        initialFocus
-                                    />
-                                    </PopoverContent>
-                                </Popover>
+                                    <Input placeholder='Event Title' type="date" {...field}/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
-                        )}/> */}
-                        {/* <FormField control={form.control} name='duration' render={({field})=>(
+                        )}/>
+                        <FormField control={form.control} name='timeit' render={({field})=>(
+                            <FormItem className='flex flex-col gap-0'>
+                                <FormLabel>Part of the Day when crisis occurred</FormLabel>
+                                <FormControl>
+                                    <Input placeholder='Event Title' type="time" {...field}/>
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}/>
+                        <FormField control={form.control} name='duration' render={({field})=>(
                         <FormItem>
-                            <FormLabel>Duration</FormLabel>
+                            <FormLabel>Duration of Discomfort</FormLabel>
                             <FormControl>
-                                <Slider
-                                    value={field.value}  // Use the field value directly
-                                    onChange={(newValue) => field.onChange([newValue])}  // Wrap the value in an array
-                                    name='Duration'
-                                    defaultValue={[33]}  // Provide as an array
-                                    max={100}
-                                    step={1}
-                                />
+                            <Input placeholder='In hrs approx' type="range" {...field}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
                         )}/>
-                        <FormField control={form.control} name='pain' render={({field})=>(
+                        <FormField control={form.control} name='painLevel' render={({field})=>(
                             <FormItem>
                                 <FormLabel>Pain Levels</FormLabel>
                                 <FormControl>
-                                    <Slider
-                                        value={field.value}  // Use the field value directly
-                                        onChange={(newValue) => field.onChange([newValue])}  // Wrap the value in an array
-                                        name='Pain Level'
-                                        defaultValue={[33]}  // Provide as an array
-                                        max={100}
-                                        step={1}
-                                    />
+                                <Input placeholder='Between 1 - 10' type="range" {...field}/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
-                        )}/> */}
+                        )}/>
                         {/* <FormField control={form.control} name='symptom' render={({ field }) => (
                         <FormItem>
                             <FormLabel>Symptoms</FormLabel>

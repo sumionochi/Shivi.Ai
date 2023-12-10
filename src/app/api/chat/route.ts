@@ -37,10 +37,10 @@ export async function POST(req: Request) {
     const systemMessage: ChatCompletionMessage = {
       role: "assistant",
       content:
-        "You are an intelligent health assistant app. You answer the user's question based on their existing notes. " +
+        "You are an intelligent health assistant app. You answer the user's question based on their existing notes over the title, date, duration of pain, pain level and description. " +
         "The relevant notes for this query are:\n" +
         relevantLogs
-          .map((event) => `Title: ${event.title}\n\nContent:\n${event.description}`)
+          .map((event) => `Title about the crisis: ${event.title}\nDate of the crisis: ${event.dateit}\nTime or Part of the Day for crisis: ${event.timeit}\nDuration of discomfort: ${event.duration}\nPain Level: ${event.painLevel}\n\nDescription:\n${event.description}`)
           .join("\n\n"),
     };
 
