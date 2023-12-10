@@ -13,19 +13,19 @@ const TypewriterTitle = (props: Props) => {
       }}
       onInit={(typewriter) => {
         typewriter
-          .typeString(`Health,`)
+          .typeString(`Health`)
           .pauseFor(1000)
           .deleteAll()
-          .typeString(`Panic Attacks,`)
+          .typeString(`Panic Attacks`)
           .pauseFor(1000)
           .deleteAll()
-          .typeString(`Migraines,`)
+          .typeString(`Migraines`)
           .pauseFor(1000)
           .deleteAll()
-          .typeString(`Seizures,`)
+          .typeString(`Seizures`)
           .pauseFor(1000)
           .deleteAll()
-          .typeString(`Blackouts,`)
+          .typeString(`Blackouts`)
           .start();
       }}
     />

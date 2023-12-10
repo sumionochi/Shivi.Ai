@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, BookText, Bot, BotIcon, Github, Key, Linkedin
 import Image from 'next/image'
 import Link from 'next/link'
 import Typewriter from '@/components/ui/Typewriter'
+import { ThemeProvider } from '@/components/ui/ThemeProvider'
 
 export default function Home() {
   return (
@@ -68,6 +69,7 @@ export default function Home() {
         </div>
         <div className='flex px-4 pt-1 bg-white/20 text-white justify-between gap-4 flex-row items-center text-primary h-14 absolute bottom-0 w-full'>
         <h2 className='text-white'>© 2023 Shivi.Ai</h2>
+        <ThemeProvider/>
         <div className='flex flex-row gap-4 justify-center items-center'>
           <Link href={'https://github.com/sumionochi'}>
             <Github/>
@@ -83,6 +85,7 @@ export default function Home() {
           </Link>
         </div>
         </div>
+        
     </div>
   )
 }

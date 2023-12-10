@@ -13,13 +13,7 @@ datasource db {
 model Event {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  date        String
-  duration    String
-  pain        String
-  symptom     String[]
-  location    String[]
-  medication  String[]
-  description String
+  description String?
   userId      String
   createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
