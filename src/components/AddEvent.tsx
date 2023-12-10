@@ -129,7 +129,7 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                             <FormItem>
                                 <FormLabel>Pain Levels</FormLabel>
                                 <FormControl>
-                                <Input placeholder='Between 1 - 10' type="range" {...field}/>
+                                <Input placeholder='Between 1 - 10' min={1} max={10} type="range" {...field}/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>

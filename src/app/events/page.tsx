@@ -19,7 +19,7 @@ const EventsPage = async (props: Props) => {
 
   return (
     <div className="flex flex-col max-w-6xl mx-auto mt-10 gap-8">
-      <Calendar/>
+      <Calendar Everyevent={Everyevent}/>
       {Everyevent.map((note) => (
         <Events note={note} key={note.id} />
       ))}
