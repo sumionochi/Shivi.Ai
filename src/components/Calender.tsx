@@ -41,9 +41,9 @@ export default function Calendar({ Everyevent }: Props) {
 		if (value === 0) {
 			return 'bg-gray-300';
 		} else if (value < 5) {
-			return "bg-gradient-to-br from-violet-300 to-orange-200";
+			return "bg-gradient-to-br from-violet-300 to-orange-300";
 		} else if (value < 8) {
-			return "bg-gradient-to-br from-violet-400 to-orange-300";
+			return "bg-gradient-to-br from-violet-400 to-orange-500";
 		} else {
 			return "bg-gradient-to-br from-violet-700 to-orange-500";
 		}

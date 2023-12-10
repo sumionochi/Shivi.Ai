@@ -93,8 +93,8 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                     <form className='space-y-3' onSubmit={form.handleSubmit(onSubmit)}>
                         <FormField control={form.control} name='title' render={({field})=>(
                             <FormItem>
-                                <FormLabel>Event Title</FormLabel>
-                                <FormControl><Input placeholder='Event Title' {...field}/></FormControl>
+                                <FormLabel>Title of Crisis</FormLabel>
+                                <FormControl><Input placeholder='Panic Attack' {...field}/></FormControl>
                                 <FormMessage/>
                             </FormItem>
                         )}/>
@@ -118,7 +118,7 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                         )}/>
                         <FormField control={form.control} name='duration' render={({field})=>(
                         <FormItem>
-                            <FormLabel>Duration of Discomfort</FormLabel>
+                            <FormLabel>Duration of Discomfort (1 - 100hrs)</FormLabel>
                             <FormControl>
                             <Input placeholder='In hrs approx' type="range" {...field}/>
                             </FormControl>
@@ -127,7 +127,7 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                         )}/>
                         <FormField control={form.control} name='painLevel' render={({field})=>(
                             <FormItem>
-                                <FormLabel>Pain Levels</FormLabel>
+                                <FormLabel>Pain Levels (1 - 10)</FormLabel>
                                 <FormControl>
                                 <Input placeholder='Between 1 - 10' min={1} max={10} type="range" {...field}/>
                                 </FormControl>
@@ -208,8 +208,8 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                         )} /> */}
                         <FormField control={form.control} name='description' render={({field})=>(
                             <FormItem>
-                                <FormLabel>Event Description</FormLabel>
-                                <FormControl><Textarea placeholder='Event Title' {...field}/></FormControl>
+                                <FormLabel>Elaborate on the Crisis</FormLabel>
+                                <FormControl><Textarea placeholder='It was mild' {...field}/></FormControl>
                                 <FormMessage/>
                             </FormItem>
                         )}/>

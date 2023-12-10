@@ -53,7 +53,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
       )}
     >
       <button onClick={onClose} className="mb-1 ms-auto block">
-        <XCircle className="text-primary" size={30} />
+        <XCircle className="text-primary bg-secondary p-1 rounded-lg" size={30} />
       </button>
       <div className="flex h-[450px] sm:h-[600px] flex-col rounded-lg border bg-background shadow-xl">
         <div className="mt-3 h-full overflow-y-auto px-3" ref={scrollRef}>
@@ -64,7 +64,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
             <ChatMessage
               message={{
                 role: "assistant",
-                content: "Thinking...",
+                content: "Researching...",
               }}
             />
           )}
@@ -79,14 +79,14 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
           {!error && messages.length === 0 && (
             <div className="flex h-full items-center justify-center gap-3 text-center">
               <Bot />
-              Ask Any Question From The Listed Reports
+              Shivi.Ai ready to Gather Insights
             </div>
           )}
         </div>
         <form onSubmit={handleSubmit} className="m-3 flex gap-1 space-x-2">
           <Button
             title="Clear chat"
-            variant="outline"
+            variant="destructive"
             size="icon"
             className="shrink-0"
             type="button"
@@ -100,7 +100,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
             placeholder="Ask your Query..."
             ref={inputRef}
           />
-          <Button type="submit" className="">Send</Button>
+          <Button type="submit" className='p-5 shadow-md shadow-black border-none bg-gradient-to-br from-violet-500 to-orange-300 text-white rounded-xl'>Send</Button>
         </form>
       </div>
     </div>

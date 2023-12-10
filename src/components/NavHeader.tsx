@@ -10,7 +10,6 @@ import AIChatButton from './AIChatButton'
 type Props = {}
 
 const NavHeader = (props: Props) => {
-  console.log()
   const [addDialog, setAddDialog] = useState(false);
   return (
     <>

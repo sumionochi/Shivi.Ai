@@ -21,14 +21,16 @@ const EventsPage = async (props: Props) => {
     <div className="flex flex-col max-w-6xl mx-auto mt-10 gap-8 p-4">
       <Calendar Everyevent={Everyevent}/>
       <AIChatButton/>
+      <div className="grid gap-4 place-content-start grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       {Everyevent.map((note) => (
         <Events note={note} key={note.id} />
       ))}
+      </div>
       
       {Everyevent.length === 0 && (
-        <div className="col-span-full text-center">
-          {"Let's start tracking down your crisis."}
-        </div>
+        <p className="col-span-full text-center text-white text-xl font-semibold">
+          Let's start tracking down your crisis.
+        </p>
       )}
     </div>
   )
