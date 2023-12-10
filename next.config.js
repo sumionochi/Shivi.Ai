@@ -13,6 +13,13 @@ const nextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
-}
+    images:{
+        remotePatterns:[
+            {
+                hostname:"img.clerk.com",
+            },
+        ],
+    },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

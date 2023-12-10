@@ -27,10 +27,14 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const handleScroll = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
+  };
+
+  useEffect(() => {
+    handleScroll();
   }, [messages]);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
       inputRef.current?.focus();
     }
   }, [open]);
-
+ 
   const lastMessageIsUser = messages[messages.length - 1]?.role === "user";
 
   return (
@@ -103,7 +107,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
   );
 }
 
-async function ChatMessage({
+function ChatMessage({
   message: { role, content },
 }: {
   message: Pick<Message, "role" | "content">;

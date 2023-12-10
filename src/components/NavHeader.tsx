@@ -5,6 +5,7 @@ import { Themetoggle } from './ui/Themetoggle'
 import Logo from './Logo'
 import { UserButton, auth } from '@clerk/nextjs'
 import AddEvent from './AddEvent'
+import AIChatButton from './AIChatButton'
 
 type Props = {}
 
