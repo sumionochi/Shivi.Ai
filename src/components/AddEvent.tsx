@@ -1,5 +1,6 @@
+"use client"
 import {CreateEventSchema, createEventSchema } from '@/lib/validation/events'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod"
 import { Dialog,DialogTitle, DialogContent, DialogFooter, DialogHeader } from './ui/dialog'
@@ -15,30 +16,45 @@ import { Calendar } from './ui/calendar'
 import { format, parse } from "date-fns"
 import { Slider } from './ui/slider'
 import health from '../../health'
+import { Event } from '@prisma/client'
+import LoadingButton from './ui/loading-btn'
 
 type Props = {
     open: boolean,
     setOpen: (open: boolean) => void,
+    toEdit?: Event, 
 }
 
-const AddEvent = ({open, setOpen}: Props) => {
+const AddEvent = ({open, setOpen, toEdit}: Props) => {
+    const [deleteInProgress, setDeleteInProgress] = useState(false);
+
     const router = useRouter();
     const form = useForm<CreateEventSchema>({
         resolver: zodResolver(createEventSchema),
         defaultValues: {
-            title: "",
-            // datetime: new Date(),
-            description: "",
+            title: toEdit?.title || "",
+            description: toEdit?.description || "",
         },
     });   
     async function onSubmit(input:CreateEventSchema) {
         try{
-            const response = await fetch("/api/events",{
-                method: "POST",
-                body: JSON.stringify(input)
-            })
-            if(!response.ok) throw Error("Status code: " + response.status)
-            form.reset();
+            if (toEdit) {
+                const response = await fetch("/api/events", {
+                  method: "PUT",
+                  body: JSON.stringify({
+                    id: toEdit.id,
+                    ...input,
+                  }),
+                });
+                if (!response.ok) throw Error("Status code: " + response.status);
+              } else {
+                const response = await fetch("/api/events", {
+                  method: "POST",
+                  body: JSON.stringify(input),
+                });
+                if (!response.ok) throw Error("Status code: " + response.status);
+                form.reset();
+              }
         router.refresh();
         setOpen(false);
         } catch (error){
@@ -46,10 +62,30 @@ const AddEvent = ({open, setOpen}: Props) => {
             alert("Something went wrong, Please try again.");
         }
     }
+    async function deleteEvent() {
+        if (!toEdit) return;
+        setDeleteInProgress(true);
+        try {
+          const response = await fetch("/api/notes", {
+            method: "DELETE",
+            body: JSON.stringify({
+              id: toEdit.id,
+            }),
+          });
+          if (!response.ok) throw Error("Status code: " + response.status);
+          router.refresh();
+          setOpen(false);
+        } catch (error) {
+          console.error(error);
+          alert("Something went wrong. Please try again.");
+        } finally {
+          setDeleteInProgress(false);
+        }
+      }
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
-                <DialogHeader><DialogTitle>New Event</DialogTitle></DialogHeader>
+                <DialogHeader><DialogTitle>{toEdit ? "Edit Event" : "Add Event"}</DialogTitle></DialogHeader>
                 <Form {...form}>
                     <form className='space-y-3' onSubmit={form.handleSubmit(onSubmit)}>
                         <FormField control={form.control} name='title' render={({field})=>(
@@ -211,7 +247,12 @@ const AddEvent = ({open, setOpen}: Props) => {
                                 <FormMessage/>
                             </FormItem>
                         )}/>
-                        <DialogFooter className='w-full'>
+                        <DialogFooter className='w-full gap-1 sm:gap-0'>
+                            {toEdit && (<LoadingButton variant="destructive"
+                                            loading={deleteInProgress}
+                                            disabled={form.formState.isSubmitting}
+                                            onClick={deleteEvent}
+                                            type="button">Delete Event</LoadingButton>)}
                             <Button className='w-full space-x-2' type='submit'>
                                 {form.formState.isSubmitting && <Loader2 className='w-5 h-5 animate-spin'/>}
                                 Submit

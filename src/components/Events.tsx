@@ -44,6 +44,7 @@ export default function Note({ note }: NoteProps) {
       <AddEvent
         open={showEditDialog}
         setOpen={setShowEditDialog}
+        toEdit={note}
       />
     </>
   );
