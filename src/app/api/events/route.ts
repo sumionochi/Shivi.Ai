@@ -12,18 +12,19 @@ export async function POST(req:Request) {
             console.error(result.error);
             return Response.json({error: "Invalid input"}, {status: 400})
         }
-        const {title, description} = result.data;
+        const {title, description, datetime, duration, painLevel} = result.data;
         const {userId} = auth();
         if(!userId) return Response.json({error:"Unauthorized"}, {status: 401});
         
         const embedding = await getEmbeddingForNote(title, description);
-
-
         
         const event = await prisma.$transaction(async (tx) => {
         const note = await tx.event.create({
           data: {
             title,
+            duration,
+            datetime,
+            painLevel,
             description,
             userId,
           },

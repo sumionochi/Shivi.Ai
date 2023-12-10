@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       filter: { userId },
     });
 
-    const relevantNotes = await prisma.event.findMany({
+    const relevantLogs = await prisma.event.findMany({
       where: {
         id: {
           in: vectorQueryResponse.matches.map((match) => match.id),
@@ -32,14 +32,14 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log("Relevant notes found: ", relevantNotes);
+    console.log("Relevant Crisis Logs were found: ", relevantLogs);
 
     const systemMessage: ChatCompletionMessage = {
       role: "assistant",
       content:
-        "You are an intelligent note-taking app. You answer the user's question based on their existing notes. " +
+        "You are an intelligent health assistant app. You answer the user's question based on their existing notes. " +
         "The relevant notes for this query are:\n" +
-        relevantNotes
+        relevantLogs
           .map((event) => `Title: ${event.title}\n\nContent:\n${event.description}`)
           .join("\n\n"),
     };

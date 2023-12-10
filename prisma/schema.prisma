@@ -13,6 +13,9 @@ datasource db {
 model Event {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
+  datetime    DateTime
+  duration    Int
+  painLevel   Int
   description String?
   userId      String
   createdAt   DateTime @default(now())
