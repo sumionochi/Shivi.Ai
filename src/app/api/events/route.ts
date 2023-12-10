@@ -1,6 +1,8 @@
 import { createEventSchema, deleteEventSchema, updateEventSchema } from "@/lib/validation/events";
 import { auth } from "@clerk/nextjs";
 import prisma from "@/lib/db";
+import { getEmbedding } from "@/lib/openai";
+import { notesIndex } from "@/lib/pinecone";
 
 export async function POST(req:Request) {
     try{
@@ -13,13 +15,30 @@ export async function POST(req:Request) {
         const {title, description} = result.data;
         const {userId} = auth();
         if(!userId) return Response.json({error:"Unauthorized"}, {status: 401});
-        const event = await prisma.event.create({
-            data:{
-                title,
-                description,
-                userId,
-            }
-        })
+        
+        const embedding = await getEmbeddingForNote(title, description);
+
+
+        
+        const event = await prisma.$transaction(async (tx) => {
+        const note = await tx.event.create({
+          data: {
+            title,
+            description,
+            userId,
+          },
+        });
+
+        await notesIndex.upsert([
+          {
+            id: note.id,
+            values: embedding,
+            metadata: { userId },
+          },
+        ]);
+
+          return note;
+        });
         return Response.json({event},{status:201});
     } catch(error){
         console.error(error);
@@ -52,7 +71,7 @@ export async function PUT(req: Request) {
         return Response.json({ error: "Unauthorized" }, { status: 401 });
       }
   
-    //   const embedding = await getEmbeddingForNote(title, description);
+      const embedding = await getEmbeddingForNote(title, description);
   
       const updatedNote = await prisma.$transaction(async (tx) => {
         const updatedNote = await tx.event.update({
@@ -63,13 +82,13 @@ export async function PUT(req: Request) {
           },
         });
   
-        // await notesIndex.upsert([
-        //   {
-        //     id,
-        //     values: embedding,
-        //     metadata: { userId },
-        //   },
-        // ]);
+        await notesIndex.upsert([
+          {
+            id,
+            values: embedding,
+            metadata: { userId },
+          },
+        ]);
   
         return updatedNote;
       });
@@ -97,7 +116,7 @@ export async function PUT(req: Request) {
       const note = await prisma.event.findUnique({ where: { id } });
   
       if (!note) {
-        return Response.json({ error: "Note not found" }, { status: 404 });
+        return Response.json({ error: "Event not found" }, { status: 404 });
       }
   
       const { userId } = auth();
@@ -106,18 +125,18 @@ export async function PUT(req: Request) {
         return Response.json({ error: "Unauthorized" }, { status: 401 });
       }
   
-    //   await prisma.$transaction(async (tx) => {
-    //     await tx.note.delete({ where: { id } });
-    //     await notesIndex.deleteOne(id);
-    //   });
+      await prisma.$transaction(async (tx) => {
+        await tx.event.delete({ where: { id } });
+        await notesIndex.deleteOne(id);
+      });
   
-      return Response.json({ message: "Note deleted" }, { status: 200 });
+      return Response.json({ message: "Event deleted" }, { status: 200 });
     } catch (error) {
       console.error(error);
       return Response.json({ error: "Internal server error" }, { status: 500 });
     }
   }
   
-//   async function getEmbeddingForNote(title: string, content: string | undefined) {
-//     return getEmbedding(title + "\n\n" + content ?? "");
-//   }
+  async function getEmbeddingForNote(title: string, content: string | undefined) {
+    return getEmbedding(title + "\n\n" + content ?? "");
+  }

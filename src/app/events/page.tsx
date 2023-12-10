@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import React from 'react'
 import prisma from "@/lib/db";
 import Events from '@/components/Events'
+import AIChatButton from "@/components/AIChatButton";
 
 export const metadata: Metadata = {
   title: 'Shivi.Ai - Events'
@@ -25,6 +26,7 @@ const EventsPage = async (props: Props) => {
           {"Let's start tracking down your crisis."}
         </div>
       )}
+      <AIChatButton/>
     </div>
   )
 }

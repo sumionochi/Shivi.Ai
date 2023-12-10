@@ -10,12 +10,6 @@ import { Textarea } from './ui/textarea'
 import { useRouter } from 'next/navigation'
 import { Button } from './ui/button'
 import { CalendarIcon, Loader2 } from 'lucide-react'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { cn } from '@/lib/utils'
-import { Calendar } from './ui/calendar'
-import { format, parse } from "date-fns"
-import { Slider } from './ui/slider'
-import health from '../../health'
 import { Event } from '@prisma/client'
 import LoadingButton from './ui/loading-btn'
 
@@ -66,7 +60,7 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
         if (!toEdit) return;
         setDeleteInProgress(true);
         try {
-          const response = await fetch("/api/notes", {
+          const response = await fetch("/api/events", {
             method: "DELETE",
             body: JSON.stringify({
               id: toEdit.id,

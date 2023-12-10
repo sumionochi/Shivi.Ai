@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react'
-import Link from 'next/link'
 import { Button } from './ui/button'
 import { Themetoggle } from './ui/Themetoggle'
 import Logo from './Logo'
@@ -10,7 +9,6 @@ import AddEvent from './AddEvent'
 type Props = {}
 
 const NavHeader = (props: Props) => {
-  // const {userId} = auth();
   console.log()
   const [addDialog, setAddDialog] = useState(false);
   return (
