@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Doctor, Health } from '@/resources'
-import { ArrowRight, ArrowUpRight, BookText, Bot, BotIcon, Github, Key, Linkedin, Lock, Mail, Map, ScrollText, Text } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, BarChart, BarChart2, BookText, Bot, BotIcon, Github, Key, Linkedin, Lock, Mail, Map, ScrollText, Text } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Typewriter from '@/components/ui/Typewriter'
@@ -8,7 +8,7 @@ import { ThemeProvider } from '@/components/ui/ThemeProvider'
 
 export default function Home() {
   return (
-    <div className='flex relative overflow-hidden antialiased min-h-screen flex-col items-center justify-between pt-0'>
+    <div className='flex relative overflow-hidden antialiased min-h-screen flex-col items-center justify-between pt-28'>
         <div className='flex flex-col items-center min-h-screen pt-10 sm:pt-26'>
           <div className='flex text-white p-6 sm:p-0 pb-0 mb-10 rounded-xl gap-8 flex-col max-w-5xl'>
             <div className='text-center font-semibold text-3xl md:text-5xl xl:text-6xl'>
@@ -34,8 +34,8 @@ export default function Home() {
             </div> */}
             <div className='grid mx-auto text-white max-w-7xl gap-4 place-items-center m-0 lg:grid-cols-2 grid-cols-1'>
               <Button className='p-6 shadow-md shadow-black border-none bg-gradient-to-r from-indigo-400 to-purple-500 text-white rounded-xl'>
-                <Text className='mr-2 w-5'/>
-                Multi Lingual Translation
+                <BarChart2 className='mr-2 w-5'/>
+                Visual Analytics
               </Button>
               <Button className='p-6 shadow-md shadow-black border-none bg-gradient-to-r from-indigo-400 to-purple-500 border text-white rounded-xl'>
                 <Bot className='mr-2 w-5'/>

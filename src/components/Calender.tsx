@@ -7,7 +7,6 @@ import {
 	HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
-import prisma from "@/lib/db";
 
 interface Props {
 	Everyevent: {
@@ -25,7 +24,7 @@ interface Props {
 }
 
 export default function Calendar({ Everyevent }: Props) {
-
+	
 	function getDateInYear(year = dayjs().year(), month = dayjs().month()) {
 		const startDate = dayjs().year(year).month(month).date(1).startOf('years');
 		const endDate = dayjs().year(year).month(month).date(1).endOf("years");
@@ -40,36 +39,74 @@ export default function Calendar({ Everyevent }: Props) {
 
 	const getColor = (value: number) => {
 		if (value === 0) {
-			return "bg-gray-300";
+			return 'bg-gray-300';
 		} else if (value < 5) {
-			return "bg-green-100";
+			return "bg-gradient-to-br from-violet-300 to-orange-200";
 		} else if (value < 8) {
-			return "bg-green-300";
+			return "bg-gradient-to-br from-violet-400 to-orange-300";
 		} else {
-			return "bg-green-500";
+			return "bg-gradient-to-br from-violet-700 to-orange-500";
 		}
 	};
 
+	const pain = (value: number) => {
+		if (value === 0) {
+			return "Low";
+		} else if (value < 5) {
+			return "Mild";
+		} else if (value < 8) {
+			return "High";
+		} else {
+			return "Chronic";
+		}
+	}
+
 	const dur = (value: number) => {
 		if (value === 0) {
-			return "No";
-		} else if (value < 20) {
-			return "Slight";
-		} else if (value < 40) {
-			return "";
-		} else {
-			return "bg-green-500";
+			return "Little";
+		} 
+		else if (value < 20) {
+			return "Little";
+		} 
+		else if (value < 50) {
+			return "Mild";
+		}
+		else if (value < 80) {
+			return "A Lot";
+		} 
+		else {
+			return "To Much";
+		}
+	}
+
+	const daypartfun = (value: number) => {
+		if (value >= 0 && value < 7) {
+			return "Midnight";
+		} 
+		else if (value >= 7 && value < 12) {
+			return "Early Morning";
+		} 
+		else if (value >= 12 && value < 17) {
+			return "Afternoon";
+		}
+		else if (value >= 17 && value < 20) {
+			return "Evening";
+		} 
+		else {
+			return "Night";
 		}
 	}
 
 	return (
 		<div className="bg-secondary rounded-lg p-6 text-center space-y-4">
-			<h1 className="text-4xl font-bold">Crisis Map</h1>
+			<h1 className="text-4xl font-bold">Crisis Map Of {dayjs().year()}</h1>
 			<div className="flex flex-wrap gap-1 justify-center rounded-md">
 			{getDateInYear().map((day, index) => {
           const matchingEvent = Everyevent.find((event) => event.dateit === day);
           const value = matchingEvent ? parseFloat(matchingEvent.painLevel) : 0;
-          return (
+		  const durtime = matchingEvent ? parseFloat(matchingEvent.duration) : 0;	
+		  const daypart = matchingEvent ? parseFloat(matchingEvent.timeit) : 0;	
+		  return (
             <HoverCard key={index}>
               <HoverCardTrigger className="">
                 <div
@@ -80,9 +117,19 @@ export default function Calendar({ Everyevent }: Props) {
                 ></div>
               </HoverCardTrigger>
               <HoverCardContent className="flex text-sm text-start flex-col">
-				<p className="font-semibold">{matchingEvent?.title}</p>
-				<p>Pain Level was {value || 0} on {day}</p>
-				<p>Duration of Discomfort</p>
+				{matchingEvent && 
+				<div>
+					<p className="font-semibold">{matchingEvent?.title}</p>
+					<p>On <span className="font-semibold">{day}</span></p>
+					<p>At <span className="font-semibold">{matchingEvent?.timeit} {daypartfun(daypart)}</span></p>
+					<p>Pain Level was <span className="font-semibold">{pain(value)}</span></p>
+					<p>Duration of Discomfort was <span className="font-semibold">{dur(durtime)}</span> for <span className="font-semibold">{durtime}hr</span></p>	
+				</div>}
+				{!matchingEvent && 
+				<div>
+					<p className="">No Crisis was Logged.</p>
+					<p>On <span className="font-semibold">{day}</span></p>	
+				</div>}
               </HoverCardContent>
             </HoverCard>
           );

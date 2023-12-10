@@ -111,7 +111,7 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                             <FormItem className='flex flex-col gap-0'>
                                 <FormLabel>Part of the Day when crisis occurred</FormLabel>
                                 <FormControl>
-                                    <Input placeholder='Event Title' type="time" {...field}/>
+                                    <Input placeholder='Event Title' type="time" className='' {...field}/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
@@ -214,13 +214,13 @@ const AddEvent = ({open, setOpen, toEdit}: Props) => {
                             </FormItem>
                         )}/>
                         <DialogFooter className='w-full gap-1 sm:gap-0'>
-                            {toEdit && (<LoadingButton variant="destructive"
+                            {toEdit && (<LoadingButton className='p-5 shadow-md shadow-black border-none bg-gradient-to-r text-white rounded-xl from-rose-700 to-pink-600'
                                             loading={deleteInProgress}
                                             disabled={form.formState.isSubmitting}
                                             onClick={deleteEvent}
                                             type="button">Delete Event</LoadingButton>)}
-                            <Button className='w-full space-x-2' type='submit'>
-                                {form.formState.isSubmitting && <Loader2 className='w-5 h-5 animate-spin'/>}
+                            <Button className='p-5 shadow-md shadow-black border-none bg-gradient-to-br from-violet-500 to-orange-300 text-white rounded-xl' type='submit'>
+                                {form.formState.isSubmitting && <Loader2 className='w-4 h-4 animate-spin mr-2'/>}
                                 Submit
                             </Button>
                         </DialogFooter>

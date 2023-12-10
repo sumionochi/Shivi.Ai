@@ -18,17 +18,18 @@ const EventsPage = async (props: Props) => {
   const Everyevent = await prisma.event.findMany({where:{userId}});
 
   return (
-    <div className="flex flex-col max-w-6xl mx-auto mt-10 gap-8">
+    <div className="flex flex-col max-w-6xl mx-auto mt-10 gap-8 p-4">
       <Calendar Everyevent={Everyevent}/>
+      <AIChatButton/>
       {Everyevent.map((note) => (
         <Events note={note} key={note.id} />
       ))}
+      
       {Everyevent.length === 0 && (
         <div className="col-span-full text-center">
           {"Let's start tracking down your crisis."}
         </div>
       )}
-      <AIChatButton/>
     </div>
   )
 }
