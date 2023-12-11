@@ -5,6 +5,7 @@ import prisma from "@/lib/db";
 import Events from '@/components/Events'
 import AIChatButton from "@/components/AIChatButton";
 import Calendar from "@/components/Calender";
+import IssueChart from "@/components/IssueChart";
 
 export const metadata: Metadata = {
   title: 'Shivi.Ai - Events'
@@ -19,7 +20,10 @@ const EventsPage = async (props: Props) => {
 
   return (
     <div className="flex flex-col max-w-6xl mx-auto mt-10 gap-8 p-4">
-      <Calendar Everyevent={Everyevent}/>
+      <div className="flex flex-col gap-4">
+        <Calendar Everyevent={Everyevent}/>
+        <IssueChart Everyevent={Everyevent}/>
+      </div>
       <AIChatButton/>
       <div className="grid gap-4 place-content-start grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       {Everyevent.map((note) => (
