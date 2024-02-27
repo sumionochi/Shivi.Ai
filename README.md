@@ -22,8 +22,6 @@ To consolidate insights and guarantee the accuracy of information before going f
 3. Prisma Studio: Used to manage multiple databases and streamline database operations.
 4. Nextjs, TailwindCss, Typescript: As Frontend of The Platform.
 5. Clerk Auth: For Authentication and Middleware security for separation of Data in different Accounts.
-6. Wisper.Ai - For text to speech and speech to text translation.
-7. WebRTC - For realtime video snapshot.
 
 ## Challenges I ran into
 Creating a seamless and secure user experience, implementing effective AI for insights, and time constraints were thrilling to tackle.
