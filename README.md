@@ -6,15 +6,15 @@ Shivi.Ai addresses the challenge of vague and incomplete information in medical 
 
 Inspired by the structure of Github for open source projects, Shivi.Ai incorporates a heatmap displaying a year's worth of crisis logs. The color variations on the heatmap indicate the intensity and frequency of reported health issues, enhancing visibility and comprehension.
 
-![Heatmap and Logs inspired by Github and Google Notes](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/002/702/706/datas/original.png)
+![Heatmap and Logs inspired by Github and Google Notes](https://github.com/sumionochi/Shivi.Ai/assets/89721628/112ab41b-996f-46d3-9b5d-97bd5a1a7177)
 
 The Crisis Log form design draws inspiration from Google Notes, prioritizing crucial details like duration of pain, pain levels, and date and time. These elements play pivotal roles in the medical diagnostic process.
 
-![Log with duration of pain lasted, pain levels and date and time holding key roles in medical diagnosis](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/002/702/704/datas/original.png)
+![Log with duration of pain lasted, pain levels and date and time holding key roles in medical diagnosis](https://github.com/sumionochi/Shivi.Ai/assets/89721628/220d467b-151a-4795-873d-e317d3c5f83c)
 
 To consolidate insights and guarantee the accuracy of information before going for a medical consultations, the health assistant queries details across all logs, builds vectors from contextual log information minimizing the risk of AI hallucination, to present a virtual AI consultation experience with Overall feedback and improvement details to help jog your mind to present accurate details to your doctor.
 
-![Virtual AI consultation experience](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/002/702/707/datas/original.png)
+![Virtual AI consultation experience](https://github.com/sumionochi/Shivi.Ai/assets/89721628/00084b3a-6616-4595-b7e4-5f959a607961)
 
 ## How I built it
 1. MongoDB: Utilized as the main database to store and manage Crisis Logs.
